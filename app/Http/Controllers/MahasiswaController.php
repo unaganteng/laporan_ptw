@@ -15,23 +15,10 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        
-        $mahasiswa = DB::table('mahasiswa')->get();
+        //
+        //$mahasiswa = DB::table('mahasiswa')->get();
         $mahasiswa = Student::all();
         return view('mahasiswa.index', ['mahasiswa' => $mahasiswa]);
-    }
-//    public function cetak()
-//     {
-//        $student = Student::All();
-//        $pdf = PDF::loadview('mahasiswa.cetak',['mahasiswa'=>$student]);
-//        return $pdf->download('1461900027_RismaAunaF');
-//     } 
-
-    public function cetak_pdf(Student $student){
-        
-        
-        $pdf = PDF::loadview('mahasiswa.show', ['mahasiswa'=>$student]);
-        return $pdf->download('1461900027_RismaAunaF');
     }
 
     /**
@@ -61,7 +48,7 @@ class MahasiswaController extends Controller
         $mahasiswa->nama = $request->nama;
         $mahasiswa->tmp_tgl = $request->tmp;
         $mahasiswa->save();
-        return redirect('/mahasiswa')->with('status','Berhasil menambah Data !!');
+        return redirect('/mahasiswa')->with('status','Data Mahasiswa Berhasil Ditambahkan !!');
     }
 
     /**
@@ -74,48 +61,46 @@ class MahasiswaController extends Controller
     {
      
         //$mahasiswa = DB::table('mahasiswa')->where('nbi',$id)->first();
-        
         return view('mahasiswa.show', ['mahasiswa' => $student]);
         //return $student;
     }
 
-  //  public function cetak(Request $request, Student $student)
-   // {
-   //     $student = Student::where('id',$request->nbi)->first();    
-  //      $data= view('mahasiswa.cetak', ['mahasiswa' => $student]);
+    public function cetak(Request $request, Student $student)
+    {
+        $student = Student::where('id',$request->nbi)->first();    
+        $data= view('mahasiswa.cetak', ['mahasiswa' => $student]);
 
 
-   //    return $data;
+       return $data;
  
        
        
  
        
  
-    //}
-    
+    }
+ 
 // ini utk pdf belum jalan
 //===========================
-     //public function print_PDF()
-     ///{
-       // $data = [
-           // 'title' => 'First PDF for Medium',
-         //   'heading' => 'Hello from 99Points.info',
-           //'content' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'        
-           //  ];
-    
-        //$pdf = PDF::loadView('mahasiswa.cetak', $data);  
-        //return $pdf->download('medium.pdf');
-
-    //}
-
-   
-    public function printPDF()
+    public function print_PDF()
     {
-        $student = student::all();
-        $pdf = PDF::loadview('mahasiswa.cetak',['mahasiswa'=>$student]);
-        return $pdf->stream();
+        $data = [
+            'title' => 'First PDF for Medium',
+            'heading' => 'Hello from 99Points.info',
+            'content' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'        
+              ];
+          
+          $pdf = PDF::loadView('mahasiswa.cetak', $data);  
+          return $pdf->download('medium.pdf');
+
+    }
+
+    public function printPDF(Student $student)
+    {
         
+        return view('mahasiswa.cetak', ['mahasiswa' => $student]);
+        //$pdf = PDF::loadView('mahasiswa.cetak', ['mahasiswa' => $student]);  
+        //return $pdf->download('medium.pdf');       
     }
 //==============================
     /**

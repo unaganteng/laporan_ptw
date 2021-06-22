@@ -4,7 +4,6 @@
     <title>Kop Surat</title>
 </head>
 @foreach($mahasiswa as $m)
-<a href="/mahasiswa/printPDF/{{$m->nbi}}" class="btn btn-primary">Cetak PDF</a> 
 <table align="center">
     <tr>
     <td><center>

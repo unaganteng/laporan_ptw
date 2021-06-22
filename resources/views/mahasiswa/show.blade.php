@@ -3,7 +3,7 @@
 @section('title','Surat Keterangan')
 
 @section('container')
-<a href="/mahasiswa/printPDF" class="btn btn-primary">Cetak PDF</a> 
+<a href="#" class="btn btn-primary">Cetak PDF</a> 
 <table align="center">
     <tr>
     <td><center>
